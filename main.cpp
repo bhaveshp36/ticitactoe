@@ -8,7 +8,7 @@ using namespace std;
 static int matrix[3][3];
 
 int validate();
-
+int playerSelection();
 
 
 int main(){
