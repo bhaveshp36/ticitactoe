@@ -1,4 +1,4 @@
-#include<iostream.h>
+#include<iostream>
 #include<conio.h>
 #include<graphics.h>
 #include<dos.h>
@@ -10,9 +10,10 @@ int matrix[3][3]={0};
 
 int matrixValidate();
 int playerSelection();
-int printmatrix();
+void printmatrix();
 int playerinput();
 int keymap();
+int gameLoop();
 
 int main(){
     printmatrix();
@@ -21,7 +22,7 @@ int main(){
 
 
 
-void 
+
 
 void printmatrix(){
     for(int i=0; i<3; i++)
