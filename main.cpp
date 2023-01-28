@@ -152,12 +152,6 @@ int playerinput()
 }
 
 
-
-
-
-
-
-
 int gamemenu()
 {
     cout<<"Enter choice y or n: ";
