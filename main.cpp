@@ -23,7 +23,27 @@ int exitToMainMenu();      //
 int continueMatch();       //
 int compareChar(char a, char b, char c);
 
-//Functions GUI
+//Functions-Logic 
+int gameMenu(); //Initial Game Menu
+int keyMap(); //mapping to keys to the matrix
+int playerInput(); // to take an input from player turn by turn
+int gameLoop(); // game runtime
+int winConditionValidate(); //to check the matrix for win conditions
+void printMatrix(); // for console print
+int matchResults(); // show result of match after winConditionValidate
+int exitToMainMenu(); //
+int continueMatch(); //
+
+int matrix[3][3]={{1,2,3},{4,5,6},{7,8,9}};
+char turn = 'x' ;
+int choice;
+int player1, player2;
+bool  matrixValidate();
+int playerSelection();
+void printmatrix();
+int playerinput();
+int keymap();
+int gameLoop();
 
 void startScreen();
 void matchScreen();
@@ -37,7 +57,9 @@ void drawO();
 
 
 int main() {
-  gameMenu();
+  printmatrix();
+  playerSelection();
+
   return 0;
 }
 
@@ -163,6 +185,17 @@ bool matchResults(char re, int counter) {
   }
   return 0;
 }
+int playerinput()// 
+{
+    if(turn=='x')
+    {
+        cout<<"Player enter input : ";
+    }
+    else if (turn== 'o')
+    {
+        cout<<"Player enter input : ";
+    }
+    cin>>choice;
 
 int exitToMainMenu(){
   player1score=player2score=0;
@@ -209,7 +242,27 @@ void startScreen(){
   outtextxy(Xlen/3,Ylen/2+100,"2.Exit");
   int userChoice
 }
-void matchScreen();
+void matchScreen()
+{
+  outtextxy(Xlen/5+4,Ylen/5,"Player 1 : x ");
+  outtextxy(Xlen,Ylen,"Player 2 : o ");
+  outtextxy(Xlen,Ylen,"  :  ");
+  drawGameBoard();
+  
+}
+void drawGameBoard();
+{
+  rectangle(Xlen/5+4,Ylen/2-100,Xlen-100,Ylen-320);
+  line(Xlen,Ylen,Xlen,Ylen);
+  line(Xlen,Ylen,Xlen,Ylen);
+  line(Xlen,Ylen,Xlen,Ylen);
+  line(Xlen,Ylen,Xlen,Ylen);
+ for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
+      
+    
+    }}
+}
 void resultScreen();
 void postMatchScreen();
 void drawX();
