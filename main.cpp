@@ -36,9 +36,11 @@ void drawO();
 
 
 int main() {
-  printmatrix();
-  playerSelection();
-
+  int gd = DETECT, gm;
+  initgraph(&gm,&gd,"C:");
+  drawX(100,100);
+  drawO(200,200);
+  closegraph();
   return 0;
 }
 
@@ -179,7 +181,7 @@ int continueMatch(){
   for (int j=0; j<3; j++) {gameMatrix[i][j]='\0';}}
   gameLoop();
 }
-}
+
 
 
 
@@ -276,8 +278,18 @@ void postMatchScreen()
       case 'x':exitToMainMenu();
       break;
   }
+}X
+void drawX(int x, int y)
+{
+  settextstyle(BOLD_FONT,HORIZ_DIR,3);
+  outtextxy(x,y,"X");
+  
+  
 }
-void drawX();
-void drawO();
+void drawO()
+{
+  settextstyle(BOLD_FONT,HORIZ_DIR,3);
+  outtextxy(x,y,"O");
+}
 
 
