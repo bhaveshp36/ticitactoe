@@ -28,18 +28,19 @@ void startScreen();
 void matchScreen();
 void resultScreen();
 void postMatchScreen();
-void drawX();
-void drawO();
-
+void drawX(int x, int y);
+void drawO(int x, int y);
+void drawGameBoard();
 
 
 
 
 int main() {
   int gd = DETECT, gm;
-  initgraph(&gm,&gd,"C:");
+  initgraph(&gm,&gd,"");
   drawX(100,100);
   drawO(200,200);
+  getch();
   closegraph();
   return 0;
 }
@@ -213,14 +214,12 @@ void startScreen(){
   outtextxy(Xlen/2,Ylen/4,"Tic-Tac-Toe");
   outtextxy(Xlen/3,Ylen/2,"1.Start New Game");
   outtextxy(Xlen/3,Ylen/2+100,"2.Exit");
-  int userChoice
+  int userChoice;
   cin >> userChoice;
   switch (userChoice) {
   case 1:
     gameLoop();
     break;
-  default:
-    return 0;
   }
 
 }
@@ -230,9 +229,9 @@ void matchScreen()
   outtextxy(Xlen,Ylen,"Player 2 : o ");
   outtextxy(Xlen,Ylen,"  :  ");
   drawGameBoard();
-  
+
 }
-void drawGameBoard();
+void drawGameBoard()
 {
   rectangle(Xlen/5+4,Ylen/2-100,Xlen-100,Ylen-320);
   line(Xlen,Ylen,Xlen,Ylen);
@@ -241,7 +240,7 @@ void drawGameBoard();
   line(Xlen,Ylen,Xlen,Ylen);
  for (int i = 0; i < 3; i++)
   {
-    for (int j = 0; j < 3; j++) 
+    for (int j = 0; j < 3; j++)
     {
       char element = gameMatrix[i][j];
       if(element=='X')
@@ -253,7 +252,7 @@ void drawGameBoard();
         drawO(Xcordinates[i],Ycordinates[j]);
       }
 
-    
+
     }
   }
 }
@@ -278,15 +277,15 @@ void postMatchScreen()
       case 'x':exitToMainMenu();
       break;
   }
-}X
+}
 void drawX(int x, int y)
 {
   settextstyle(BOLD_FONT,HORIZ_DIR,3);
   outtextxy(x,y,"X");
-  
-  
+
+
 }
-void drawO()
+void drawO(int x, int y)
 {
   settextstyle(BOLD_FONT,HORIZ_DIR,3);
   outtextxy(x,y,"O");
