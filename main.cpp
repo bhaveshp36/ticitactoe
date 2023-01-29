@@ -9,7 +9,8 @@ using namespace std;
 char gameMatrix[3][3] = {""}; // to store status
 char player1 = 'X', player2 = 'O';
 int player1score = 0, player2score = 0;
-
+int Xlen=640,Ylen=480;
+int userChoice;
 // Functions-Logic
 int gameMenu();              // Initial Game Menu
 int keyMap(char player);     // mapping to keys to the matrix
@@ -24,13 +25,27 @@ int compareChar(char a, char b, char c);
 
 //Functions GUI
 
+void startScreen();
+void matchScreen();
+void resultScreen();
+void postMatchScreen();
+void drawX();
+void drawO();
+
+
+
+
+
 int main() {
   gameMenu();
   return 0;
 }
 
+
+
+
+//Console Game Logic Functions
 int gameMenu() {
-  int userChoice;
   cout << "1.Start a New Game" << endl;
   cout << "2.Exit" << endl;
   cin >> userChoice;
@@ -184,3 +199,20 @@ void printMatrix() {
   }
   cout << endl;
 }
+
+
+//GUI Functions Definitions
+void startScreen(){
+
+  outtextxy(Xlen/2,Ylen/4,"Tic-Tac-Toe");
+  outtextxy(Xlen/3,Ylen/2,"1.Start New Game");
+  outtextxy(Xlen/3,Ylen/2+100,"2.Exit");
+  int userChoice
+}
+void matchScreen();
+void resultScreen();
+void postMatchScreen();
+void drawX();
+void drawO();
+
+
