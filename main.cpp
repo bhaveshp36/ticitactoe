@@ -23,28 +23,7 @@ int exitToMainMenu();      //
 int continueMatch();       //
 int compareChar(char a, char b, char c);
 
-//Functions-Logic 
-int gameMenu(); //Initial Game Menu
-int keyMap(); //mapping to keys to the matrix
-int playerInput(); // to take an input from player turn by turn
-int gameLoop(); // game runtime
-int winConditionValidate(); //to check the matrix for win conditions
-void printMatrix(); // for console print
-int matchResults(); // show result of match after winConditionValidate
-int exitToMainMenu(); //
-int continueMatch(); //
-
-int matrix[3][3]={{1,2,3},{4,5,6},{7,8,9}};
-char turn = 'x' ;
-int choice;
-int player1, player2;
-bool  matrixValidate();
-int playerSelection();
-void printmatrix();
-int playerinput();
-int keymap();
-int gameLoop();
-
+//Gui function declaration
 void startScreen();
 void matchScreen();
 void resultScreen();
@@ -186,17 +165,7 @@ bool matchResults(char re, int counter) {
   }
   return 0;
 }
-int playerinput()// 
-{
-    if(turn=='x')
-    {
-        cout<<"Player enter input : ";
-    }
-    else if (turn== 'o')
-    {
-        cout<<"Player enter input : ";
-    }
-    cin>>choice;
+
 
 int exitToMainMenu(){
   player1score=player2score=0;
@@ -209,6 +178,7 @@ int continueMatch(){
   for (int i=0; i<3; i++) {
   for (int j=0; j<3; j++) {gameMatrix[i][j]='\0';}}
   gameLoop();
+}
 }
 
 
