@@ -10,7 +10,7 @@ char gameMatrix[3][3] = {""}; // to store status
 char player1 = 'X', player2 = 'O';
 int player1score = 0, player2score = 0;
 int Xlen=640,Ylen=480;
-int userChoice;
+int Xcordinates[3], Ycordinates[3];
 // Functions-Logic
 int gameMenu();              // Initial Game Menu
 int keyMap(char player);     // mapping to keys to the matrix
@@ -70,6 +70,7 @@ int main() {
 int gameMenu() {
   cout << "1.Start a New Game" << endl;
   cout << "2.Exit" << endl;
+  int userChoice;
   cin >> userChoice;
   switch (userChoice) {
   case 1:
@@ -241,6 +242,15 @@ void startScreen(){
   outtextxy(Xlen/3,Ylen/2,"1.Start New Game");
   outtextxy(Xlen/3,Ylen/2+100,"2.Exit");
   int userChoice
+  cin >> userChoice;
+  switch (userChoice) {
+  case 1:
+    gameLoop();
+    break;
+  default:
+    return 0;
+  }
+
 }
 void matchScreen()
 {
@@ -257,14 +267,46 @@ void drawGameBoard();
   line(Xlen,Ylen,Xlen,Ylen);
   line(Xlen,Ylen,Xlen,Ylen);
   line(Xlen,Ylen,Xlen,Ylen);
- for (int i = 0; i < 3; i++) {
-    for (int j = 0; j < 3; j++) {
-      
+ for (int i = 0; i < 3; i++)
+  {
+    for (int j = 0; j < 3; j++) 
+    {
+      char element = gameMatrix[i][j];
+      if(element=='X')
+      {
+        drawX(Xcordinates[i],Ycordinates[j]);
+      }
+      else if(element=='O')
+      {
+        drawO(Xcordinates[i],Ycordinates[j]);
+      }
+
     
-    }}
+    }
+  }
 }
-void resultScreen();
-void postMatchScreen();
+void resultScreen()
+{
+  outtextxy(Xlen/5+4,Ylen/5,"Player 1 : x ");
+  outtextxy(Xlen,Ylen,"Player 2 : o ");
+  outtextxy(Xlen,Ylen,"  :  ");
+  drawGameBoard();
+
+
+}
+void postMatchScreen()
+{
+   outtextxy(Xlen/2,Ylen/4,"Tic-Tac-Toe");
+    outtextxy(Xlen/3,Ylen/2,"1.Start New Game");
+     outtextxy(Xlen/3,Ylen/2+100,"2.Exit");
+  char userChoice;
+  switch (userChoice) {
+      case 'y':continueMatch();
+      break;
+      case 'x':exitToMainMenu();
+      break;
+  }
+}
 void drawX();
 void drawO();
 
