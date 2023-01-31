@@ -9,7 +9,7 @@ using namespace std;
 char gameMatrix[3][3] = {""}; // to store status
 char player1 = 'X', player2 = 'O';
 int player1score = 0, player2score = 0;
-int Xlen=640,Ylen=480;
+int Xlen = 640, Ylen = 480;
 int Xcordinates[3], Ycordinates[3];
 // Functions-Logic
 int gameMenu();              // Initial Game Menu
@@ -18,12 +18,13 @@ int playerInput(int itno);   // to take an input from player turn by turn
 int gameLoop();              // game runtime
 char winConditionValidate(); // to check the matrix for win conditions
 void printMatrix();          // for console print
-bool matchResults(char re, int counter); // show result of match after winConditionValidate
+bool matchResults(
+    char re, int counter); // show result of match after winConditionValidate
 int exitToMainMenu();      //
 int continueMatch();       //
 int compareChar(char a, char b, char c);
 
-//Gui function declaration
+// Gui function declaration
 void startScreen();
 void matchScreen();
 void resultScreen();
@@ -32,23 +33,19 @@ void drawX(int x, int y);
 void drawO(int x, int y);
 void drawGameBoard();
 
-
-
-
 int main() {
   int gd = DETECT, gm;
-  initgraph(&gm,&gd,"");
-  drawX(100,100);
-  drawO(200,200);
+  initgraph(&gm, &gd, "");
+  
+  drawX(100, 100);
+  drawO(200, 200);
+
   getch();
   closegraph();
   return 0;
 }
 
-
-
-
-//Console Game Logic Functions
+// Console Game Logic Functions
 int gameMenu() {
   cout << "1.Start a New Game" << endl;
   cout << "2.Exit" << endl;
@@ -69,30 +66,33 @@ int gameLoop() {
     printMatrix();
     if (matchResults(winConditionValidate(), i)) {
       break;
-    }}
-    cout<<"press Y to continue to next match"<<endl;
-    cout<<"press X to exit to main menu"<<endl;
-    char userChoice;
-    cin>>userChoice;
-    // if (userChoice == 'y') {
-    // continueMatch();
-    // }else if (userChoice == 'x') {
-    //   exitToMainMenu();
-    // }
-    switch (userChoice) {
-      case 'y':continueMatch();
-      break;
-      case 'x':exitToMainMenu();
-      break;
+    }
+  }
+  cout << "press Y to continue to next match" << endl;
+  cout << "press X to exit to main menu" << endl;
+  char userChoice;
+  cin >> userChoice;
+  // if (userChoice == 'y') {
+  // continueMatch();
+  // }else if (userChoice == 'x') {
+  //   exitToMainMenu();
+  // }
+  switch (userChoice) {
+  case 'y':
+    continueMatch();
+    break;
+  case 'x':
+    exitToMainMenu();
+    break;
   }
 }
 
 int playerInput(int itno) {
   if ((itno % 2) == 0) {
-    cout << "Player 2:"<<endl;
+    cout << "Player 2:" << endl;
     keyMap(player2);
   } else {
-    cout << "Player 1:"<<endl;
+    cout << "Player 1:" << endl;
     keyMap(player1);
   }
 }
@@ -156,11 +156,11 @@ char winConditionValidate() {
 bool matchResults(char re, int counter) {
   if (re == 'X') {
     cout << "Player 1 Win";
-    player1score+=1;
+    player1score += 1;
     return 1;
   } else if (re == 'O') {
     cout << "Player 2 Win";
-    player2score+=1;
+    player2score += 1;
     return 1;
   } else if (counter == 9) {
     cout << "TIE!";
@@ -169,25 +169,28 @@ bool matchResults(char re, int counter) {
   return 0;
 }
 
-
-int exitToMainMenu(){
-  player1score=player2score=0;
-  for (int i=0; i<3; i++) {
-  for (int j=0; j<3; j++) {gameMatrix[i][j]='\0';}}
+int exitToMainMenu() {
+  player1score = player2score = 0;
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
+      gameMatrix[i][j] = '\0';
+    }
+  }
   system("cls");
   gameMenu();
 }
-int continueMatch(){
-  for (int i=0; i<3; i++) {
-  for (int j=0; j<3; j++) {gameMatrix[i][j]='\0';}}
+int continueMatch() {
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
+      gameMatrix[i][j] = '\0';
+    }
+  }
   gameLoop();
 }
 
-
-
-
 void printMatrix() {
-    cout<<"Scores Are: Player-1: "<<player1score<<"  ,Player-2: "<<player2score<<endl;
+  cout << "Scores Are: Player-1: " << player1score
+       << "  ,Player-2: " << player2score << endl;
   cout << "Game Matrix shown below: " << endl;
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
@@ -207,13 +210,12 @@ void printMatrix() {
   cout << endl;
 }
 
+// GUI Functions Definitions
+void startScreen() {
 
-//GUI Functions Definitions
-void startScreen(){
-
-  outtextxy(Xlen/2,Ylen/4,"Tic-Tac-Toe");
-  outtextxy(Xlen/3,Ylen/2,"1.Start New Game");
-  outtextxy(Xlen/3,Ylen/2+100,"2.Exit");
+  outtextxy(Xlen / 2, Ylen / 4, "Tic-Tac-Toe");
+  outtextxy(Xlen / 3, Ylen / 2, "1.Start New Game");
+  outtextxy(Xlen / 3, Ylen / 2 + 100, "2.Exit");
   int userChoice;
   cin >> userChoice;
   switch (userChoice) {
@@ -221,74 +223,55 @@ void startScreen(){
     gameLoop();
     break;
   }
-
 }
-void matchScreen()
-{
-  outtextxy(Xlen/5+4,Ylen/5,"Player 1 : x ");
-  outtextxy(Xlen,Ylen,"Player 2 : o ");
-  outtextxy(Xlen,Ylen,"  :  ");
+void matchScreen() {
+  outtextxy(Xlen / 5 + 4, Ylen / 5, "Player 1 : x ");
+  outtextxy(Xlen, Ylen, "Player 2 : o ");
+  outtextxy(Xlen, Ylen, "  :  ");
   drawGameBoard();
-
 }
-void drawGameBoard()
-{
-  rectangle(Xlen/5+4,Ylen/2-100,Xlen-100,Ylen-320);
-  line(Xlen,Ylen,Xlen,Ylen);
-  line(Xlen,Ylen,Xlen,Ylen);
-  line(Xlen,Ylen,Xlen,Ylen);
-  line(Xlen,Ylen,Xlen,Ylen);
- for (int i = 0; i < 3; i++)
-  {
-    for (int j = 0; j < 3; j++)
-    {
+void drawGameBoard() {
+  rectangle(Xlen / 5 + 4, Ylen / 2 - 100, Xlen - 100, Ylen - 320);
+  line(Xlen, Ylen, Xlen, Ylen);
+  line(Xlen, Ylen, Xlen, Ylen);
+  line(Xlen, Ylen, Xlen, Ylen);
+  line(Xlen, Ylen, Xlen, Ylen);
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
       char element = gameMatrix[i][j];
-      if(element=='X')
-      {
-        drawX(Xcordinates[i],Ycordinates[j]);
+      if (element == 'X') {
+        drawX(Xcordinates[i], Ycordinates[j]);
+      } else if (element == 'O') {
+        drawO(Xcordinates[i], Ycordinates[j]);
       }
-      else if(element=='O')
-      {
-        drawO(Xcordinates[i],Ycordinates[j]);
-      }
-
-
     }
   }
 }
-void resultScreen()
-{
-  outtextxy(Xlen/5+4,Ylen/5,"Player 1 : x ");
-  outtextxy(Xlen,Ylen,"Player 2 : o ");
-  outtextxy(Xlen,Ylen,"  :  ");
+void resultScreen() {
+  outtextxy(Xlen / 5 + 4, Ylen / 5, "Player 1 : x ");
+  outtextxy(Xlen, Ylen, "Player 2 : o ");
+  outtextxy(Xlen, Ylen, "  :  ");
   drawGameBoard();
-
-
 }
-void postMatchScreen()
-{
-   outtextxy(Xlen/2,Ylen/4,"Tic-Tac-Toe");
-    outtextxy(Xlen/3,Ylen/2,"1.Start New Game");
-     outtextxy(Xlen/3,Ylen/2+100,"2.Exit");
+void postMatchScreen() {
+  outtextxy(Xlen / 2, Ylen / 4, "Tic-Tac-Toe");
+  outtextxy(Xlen / 3, Ylen / 2, "1.Start New Game");
+  outtextxy(Xlen / 3, Ylen / 2 + 100, "2.Exit");
   char userChoice;
   switch (userChoice) {
-      case 'y':continueMatch();
-      break;
-      case 'x':exitToMainMenu();
-      break;
+  case 'y':
+    continueMatch();
+    break;
+  case 'x':
+    exitToMainMenu();
+    break;
   }
 }
-void drawX(int x, int y)
-{
-  settextstyle(BOLD_FONT,HORIZ_DIR,3);
-  outtextxy(x,y,"X");
-
-
+void drawX(int x, int y) {
+  settextstyle(BOLD_FONT, HORIZ_DIR, 3);
+  outtextxy(x, y, "X");
 }
-void drawO(int x, int y)
-{
-  settextstyle(BOLD_FONT,HORIZ_DIR,3);
-  outtextxy(x,y,"O");
+void drawO(int x, int y) {
+  settextstyle(BOLD_FONT, HORIZ_DIR, 3);
+  outtextxy(x, y, "O");
 }
-
-
