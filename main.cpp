@@ -28,7 +28,6 @@ int compareChar(char a, char b, char c);
 // Gui function declaration
 void startScreen();
 void matchScreen();
-void resultScreen();
 void postMatchScreen();
 void drawX(int x, int y);
 void drawO(int x, int y);
@@ -262,12 +261,7 @@ void fillMatrix() {
     }
   }
 }
-void resultScreen() {
-  settextstyle(9, HORIZ_DIR, 3);
-  outtextxy(700, 200, "Tic-Tac-Toe");
-  outtextxy(650, 300, "Player WIN");
-  drawGameBoard();
-}
+
 void postMatchScreen() {
   settextstyle(9, HORIZ_DIR, 3);
   outtextxy(700, 200, "Tic-Tac-Toe");
