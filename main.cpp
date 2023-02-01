@@ -2,17 +2,18 @@
 #include <dos.h>
 #include <graphics.h>
 #include <iostream>
+#include <math.h>
 #include <stdlib.h>
 
 using namespace std;
 // Variables
-char gameMatrix[3][3] = {""}; // to store status
+char gameMatrix[3][3] = {'\0'}; // to store status
 char player1 = 'X', player2 = 'O';
 int player1score = 0, player2score = 0;
-int Xlen = 640, Ylen = 480;
-int Xcordinates[3], Ycordinates[3];
+int Xlen = 1000, Ylen = 600;
+int Xcordinates[3] = {100, 300, 500}, Ycordinates[3] = {100, 300, 500};
+
 // Functions-Logic
-int gameMenu();              // Initial Game Menu
 int keyMap(char player);     // mapping to keys to the matrix
 int playerInput(int itno);   // to take an input from player turn by turn
 int gameLoop();              // game runtime
@@ -32,36 +33,27 @@ void postMatchScreen();
 void drawX(int x, int y);
 void drawO(int x, int y);
 void drawGameBoard();
-
+void fillMatrix();
+//-----------------------------------------------
 int main() {
   int gd = DETECT, gm;
-  initgraph(&gm, &gd, "");
-  
-  drawX(100, 100);
-  drawO(200, 200);
+  initwindow(Xlen, Ylen);
+
+  startScreen();
 
   getch();
   closegraph();
   return 0;
 }
-
+//----------------------------------------------
 // Console Game Logic Functions
-int gameMenu() {
-  cout << "1.Start a New Game" << endl;
-  cout << "2.Exit" << endl;
-  int userChoice;
-  cin >> userChoice;
-  switch (userChoice) {
-  case 1:
-    gameLoop();
-    break;
-  default:
-    return 0;
-  }
-}
 
 int gameLoop() {
+  cleardevice();
+  drawGameBoard();
+
   for (int i = 1; i < 10; i++) {
+    drawGameBoard();
     playerInput(i);
     printMatrix();
     if (matchResults(winConditionValidate(), i)) {
@@ -72,11 +64,7 @@ int gameLoop() {
   cout << "press X to exit to main menu" << endl;
   char userChoice;
   cin >> userChoice;
-  // if (userChoice == 'y') {
-  // continueMatch();
-  // }else if (userChoice == 'x') {
-  //   exitToMainMenu();
-  // }
+
   switch (userChoice) {
   case 'y':
     continueMatch();
@@ -89,42 +77,54 @@ int gameLoop() {
 
 int playerInput(int itno) {
   if ((itno % 2) == 0) {
-    cout << "Player 2:" << endl;
+    settextstyle(9, HORIZ_DIR, 3);
+    outtextxy(650, 300, "Player 2's Turn");
     keyMap(player2);
   } else {
-    cout << "Player 1:" << endl;
+    settextstyle(9, HORIZ_DIR, 3);
+    outtextxy(650, 300, "Player 1's Turn");
     keyMap(player1);
   }
 }
 
 int keyMap(char player) {
-  int userInput;
-  cin >> userInput;
-
-  if (userInput == 1 && gameMatrix[2][0] == '\0') {
-    gameMatrix[2][0] = player;
-  } else if (userInput == 2 && gameMatrix[2][1] == '\0') {
-    gameMatrix[2][1] = player;
-  } else if (userInput == 3 && gameMatrix[2][2] == '\0') {
-    gameMatrix[2][2] = player;
-  } else if (userInput == 4 && gameMatrix[1][0] == '\0') {
-    gameMatrix[1][0] = player;
-  } else if (userInput == 5 && gameMatrix[1][1] == '\0') {
-    gameMatrix[1][1] = player;
-  } else if (userInput == 6 && gameMatrix[1][2] == '\0') {
-    gameMatrix[1][2] = player;
-  } else if (userInput == 7 && gameMatrix[0][0] == '\0') {
-    gameMatrix[0][0] = player;
-  } else if (userInput == 8 && gameMatrix[0][1] == '\0') {
-    gameMatrix[0][1] = player;
-  } else if (userInput == 9 && gameMatrix[0][2] == '\0') {
-    gameMatrix[0][2] = player;
-  } else {
-    cout << "Invalid Input";
-    keyMap(player);
+  while (1) {
+    if (GetAsyncKeyState(VK_NUMPAD1) && gameMatrix[2][0] == '\0') {
+      gameMatrix[2][0] = player;
+      break;
+    } else if (GetAsyncKeyState(VK_NUMPAD2) && gameMatrix[2][1] == '\0') {
+      gameMatrix[2][1] = player;
+      break;
+    } else if (GetAsyncKeyState(VK_NUMPAD3) && gameMatrix[2][2] == '\0') {
+      gameMatrix[2][2] = player;
+      break;
+    } else if (GetAsyncKeyState(VK_NUMPAD4) && gameMatrix[1][0] == '\0') {
+      gameMatrix[1][0] = player;
+      break;
+    } else if (GetAsyncKeyState(VK_NUMPAD5) && gameMatrix[1][1] == '\0') {
+      gameMatrix[1][1] = player;
+      break;
+    } else if (GetAsyncKeyState(VK_NUMPAD6) && gameMatrix[1][2] == '\0') {
+      gameMatrix[1][2] = player;
+      break;
+    } else if (GetAsyncKeyState(VK_NUMPAD7) && gameMatrix[0][0] == '\0') {
+      gameMatrix[0][0] = player;
+      break;
+    } else if (GetAsyncKeyState(VK_NUMPAD8) && gameMatrix[0][1] == '\0') {
+      gameMatrix[0][1] = player;
+      break;
+    } else if (GetAsyncKeyState(VK_NUMPAD9) && gameMatrix[0][2] == '\0') {
+      gameMatrix[0][2] = player;
+      break;
+    } else {
+      getch();
+    }
   }
-  system("cls");
+  cleardevice();
+  drawGameBoard();
+  fillMatrix();
 }
+
 int compareChar(char a, char b, char c) {
   if (a == b && a == c && a != '\0' && b != '\0' && c != '\0') {
     return 1;
@@ -132,6 +132,7 @@ int compareChar(char a, char b, char c) {
     return 0;
   }
 }
+
 char winConditionValidate() {
 
   for (int i = 0; i < 3; i++) { // row
@@ -141,6 +142,7 @@ char winConditionValidate() {
   }
   for (int i = 0; i < 3; i++) { // column
     if (compareChar(gameMatrix[0][i], gameMatrix[1][i], gameMatrix[2][i])) {
+
       return gameMatrix[0][i];
     }
   }
@@ -155,15 +157,21 @@ char winConditionValidate() {
 
 bool matchResults(char re, int counter) {
   if (re == 'X') {
-    cout << "Player 1 Win";
     player1score += 1;
+    settextstyle(9, HORIZ_DIR, 3);
+    outtextxy(700, 200, "Tic-Tac-Toe");
+    outtextxy(650, 300, "Player 1 WON");
     return 1;
   } else if (re == 'O') {
-    cout << "Player 2 Win";
     player2score += 1;
+    settextstyle(9, HORIZ_DIR, 3);
+    outtextxy(700, 200, "Tic-Tac-Toe");
+    outtextxy(650, 300, "Player 2 WON");
     return 1;
   } else if (counter == 9) {
-    cout << "TIE!";
+    settextstyle(9, HORIZ_DIR, 3);
+    outtextxy(700, 200, "Tic-Tac-Toe");
+    outtextxy(650, 300, "Its a TIE!");
     return 1;
   }
   return 0;
@@ -176,9 +184,10 @@ int exitToMainMenu() {
       gameMatrix[i][j] = '\0';
     }
   }
-  system("cls");
-  gameMenu();
+  cleardevice();
+  startScreen();
 }
+
 int continueMatch() {
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
@@ -209,33 +218,39 @@ void printMatrix() {
   }
   cout << endl;
 }
-
+//------------------------------------------------------------------------
 // GUI Functions Definitions
 void startScreen() {
-
-  outtextxy(Xlen / 2, Ylen / 4, "Tic-Tac-Toe");
-  outtextxy(Xlen / 3, Ylen / 2, "1.Start New Game");
-  outtextxy(Xlen / 3, Ylen / 2 + 100, "2.Exit");
-  int userChoice;
-  cin >> userChoice;
-  switch (userChoice) {
-  case 1:
-    gameLoop();
-    break;
+  drawGameBoard();
+  settextstyle(9, HORIZ_DIR, 3);
+  outtextxy(700, 200, "Tic-Tac-Toe");
+  outtextxy(650, 300, "(Enter)Start New Game");
+  outtextxy(650, 400, "(Esc)Exit");
+  while (1) {
+    if (GetAsyncKeyState(VK_RETURN)) {
+      gameLoop();
+    } else if (GetAsyncKeyState(VK_ESCAPE)) {
+      closegraph();
+    }
   }
 }
+
 void matchScreen() {
   outtextxy(Xlen / 5 + 4, Ylen / 5, "Player 1 : x ");
   outtextxy(Xlen, Ylen, "Player 2 : o ");
   outtextxy(Xlen, Ylen, "  :  ");
   drawGameBoard();
 }
+
 void drawGameBoard() {
-  rectangle(Xlen / 5 + 4, Ylen / 2 - 100, Xlen - 100, Ylen - 320);
-  line(Xlen, Ylen, Xlen, Ylen);
-  line(Xlen, Ylen, Xlen, Ylen);
-  line(Xlen, Ylen, Xlen, Ylen);
-  line(Xlen, Ylen, Xlen, Ylen);
+  rectangle(0, 0, 600, 600);
+  line(200, 0, 200, 600);
+  line(400, 0, 400, 600);
+  line(0, 200, 600, 200);
+  line(0, 400, 600, 400);
+}
+
+void fillMatrix() {
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
       char element = gameMatrix[i][j];
@@ -248,15 +263,16 @@ void drawGameBoard() {
   }
 }
 void resultScreen() {
-  outtextxy(Xlen / 5 + 4, Ylen / 5, "Player 1 : x ");
-  outtextxy(Xlen, Ylen, "Player 2 : o ");
-  outtextxy(Xlen, Ylen, "  :  ");
+  settextstyle(9, HORIZ_DIR, 3);
+  outtextxy(700, 200, "Tic-Tac-Toe");
+  outtextxy(650, 300, "Player WIN");
   drawGameBoard();
 }
 void postMatchScreen() {
-  outtextxy(Xlen / 2, Ylen / 4, "Tic-Tac-Toe");
-  outtextxy(Xlen / 3, Ylen / 2, "1.Start New Game");
-  outtextxy(Xlen / 3, Ylen / 2 + 100, "2.Exit");
+  settextstyle(9, HORIZ_DIR, 3);
+  outtextxy(700, 200, "Tic-Tac-Toe");
+  outtextxy(650, 300, "(Enter)Continue");
+  outtextxy(650, 400, "(Esc)Exit to Main Menu");
   char userChoice;
   switch (userChoice) {
   case 'y':
@@ -268,10 +284,10 @@ void postMatchScreen() {
   }
 }
 void drawX(int x, int y) {
-  settextstyle(BOLD_FONT, HORIZ_DIR, 3);
+  settextstyle(3, HORIZ_DIR, 5);
   outtextxy(x, y, "X");
 }
 void drawO(int x, int y) {
-  settextstyle(BOLD_FONT, HORIZ_DIR, 3);
+  settextstyle(3, HORIZ_DIR, 5);
   outtextxy(x, y, "O");
 }
