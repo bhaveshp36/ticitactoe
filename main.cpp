@@ -70,6 +70,16 @@ void drawGameBoard() {
   line(400, 0, 400, 600);
   line(0, 200, 600, 200);
   line(0, 400, 600, 400);
+  settextstyle(9, HORIZ_DIR, 1);
+  outtextxy(160,180,"[7]");
+  outtextxy(160,380,"[4]");
+  outtextxy(160,580,"[1]");
+  outtextxy(360,180,"[8]");
+  outtextxy(360,380,"[5]");
+  outtextxy(360,580,"[2]");
+  outtextxy(560,180,"[9]");
+  outtextxy(560,380,"[6]");
+  outtextxy(560,580,"[3]");
 }
 
 int gameLoop() {
